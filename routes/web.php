@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::controller(\App\Http\Controllers\frontend\PageController::class)->group(function () {
     Route::get('/', 'home');
     Route::get('/users', 'users')->name("users.page");
+    Route::get('/persons/{person}', 'person')->name("person.show");
+    Route::match(['get', 'post'], '/log-in', 'logIn')->name("logIn.page");
 });
 
 Route::resource('/gender', \App\Http\Controllers\backend\GenderController::class);
@@ -24,7 +26,7 @@ Route::resource('/post', \App\Http\Controllers\backend\PostController::class);
 Route::resource('/role', \App\Http\Controllers\backend\RoleController::class)->except(['show']);
 Route::resource('/type', \App\Http\Controllers\backend\TypeController::class);
 
-//Route::resource('person', \App\Http\Controllers\backend\PersonController::class);
+Route::resource('person', \App\Http\Controllers\backend\PersonController::class)->except(['show', 'index', 'create', 'edit']);
 
 Route::group(['prefix' => 'trashed'], function (){
     Route::get('/gender', [App\Http\Controllers\backend\GenderController::class, 'trashed'])->name('gender.trashed');

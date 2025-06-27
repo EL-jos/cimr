@@ -7,6 +7,7 @@ use App\Models\Gender;
 use App\Models\MaritalStatus;
 use App\Models\Post;
 use App\Models\Role;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
 class ListModelController extends Controller
@@ -22,5 +23,10 @@ class ListModelController extends Controller
     }
     public function roles(){
         return response()->json(Role::all());
+    }
+
+    public function types()
+    {
+        return response()->json(Type::all());
     }
 }

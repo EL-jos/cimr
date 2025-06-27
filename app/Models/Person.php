@@ -12,7 +12,7 @@ class Person extends Model
     use HasFactory;
     protected $table = "persons";
     protected $guarded = [];
-    protected $appends = ['age', 'type_roles'];
+    protected $appends = ['age', 'type_roles', 'duree_conge_annuel', 'jours_conges_annuels_disponibles', 'anciennete_en_annees'];
 
     public $incrementing = false;
 
@@ -45,6 +45,10 @@ class Person extends Model
         return $this->belongsTo(MaritalStatus::class);
     }
 
+    public function leaves(){
+        return $this->hasMany(Leave::class);
+    }
+
     public function getAgeAttribute(){
         $age = Carbon::parse($this->birthdate)->age;
         return $age;
@@ -57,8 +61,100 @@ class Person extends Model
             $roles = ($index + 1)  === $this->roles->count()
                     ? $roles .= $role->name . '.'
                     : $roles .= $role->name . ', ';
-            
+
         }
         return $roles;
     }
+
+    public function calculerDureeCongeAnnuel(): int
+    {
+        $role = $this->roles()->first();
+        if (!$role || !$this->hire_date) {
+            return 0;
+        }
+
+        $anciennete = Carbon::parse($this->hire_date)->diffInYears(Carbon::now());
+
+        if ($role->id === 2) { // Employé
+            if ($anciennete >= 5) return 26;
+            if ($anciennete >= 4) return 22;
+            if ($anciennete >= 3) return 20;
+            if ($anciennete >= 2) return 18;
+            return 0;
+        } elseif ($role->id === 3) { // Cadre
+            if ($anciennete >= 10) return 31;
+            if ($anciennete >= 5) return 28;
+            if ($anciennete >= 4) return 26;
+            return 0;
+        } elseif ($role->id === 1) { // Admin <=> Cadre
+            if ($anciennete >= 10) return 31;
+            if ($anciennete >= 5) return 28;
+            if ($anciennete >= 4) return 26;
+            return 0;
+        }elseif ($role->id === 4) { // RH <=> Employé
+            if ($anciennete >= 5) return 26;
+            if ($anciennete >= 4) return 22;
+            if ($anciennete >= 3) return 20;
+            if ($anciennete >= 2) return 18;
+            return 0;
+        }
+
+        return 0;
+    }
+
+    public function joursCongesAnnuelsDisponibles(): int
+    {
+        $dureeDroit = $this->calculerDureeCongeAnnuel();
+
+        // Somme des congés annuels pris cette année (type_id = 12)
+        $congesPris = $this->leaves()
+            ->where('type_id', 12)
+            ->whereYear('start', Carbon::now()->year)
+            ->sum('number');
+
+        $restant = $dureeDroit - $congesPris;
+
+        return max(0, $restant);
+    }
+
+    public function getDureeCongeAnnuelAttribute()
+    {
+        return $this->calculerDureeCongeAnnuel();
+    }
+
+    public function getJoursCongesAnnuelsDisponiblesAttribute()
+    {
+        return $this->joursCongesAnnuelsDisponibles();
+    }
+
+    public function ancienneteEnAnnees(): int
+    {
+        if (!$this->hire_date) {
+            return 0;
+        }
+
+        return Carbon::parse($this->hire_date)->diffInYears(Carbon::now());
+    }
+
+    public function getAncienneteEnAnneesAttribute(): int
+    {
+        return $this->ancienneteEnAnnees();
+    }
+
+    public function joursCongesAnnuelsDisponiblesPourCetteAnnee(int $year = null): int
+    {
+        $year = $year ?? Carbon::now()->year;
+        $dureeDroit = $this->calculerDureeCongeAnnuel();
+
+        $congesPris = $this->leaves()
+            ->where('type_id', 12)
+            ->whereYear('start', $year)
+            ->sum('number');
+
+        $restant = $dureeDroit - $congesPris;
+        return max(0, $restant);
+    }
+
+
+
 }

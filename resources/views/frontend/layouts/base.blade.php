@@ -67,7 +67,7 @@
                 <div class="aside-user d-flex align-items-sm-center justify-content-center py-5">
                     <!--begin::Symbol-->
                     <div class="symbol symbol-50px">
-                        <img src="assets/media/avatars/300-1.jpg" alt="" />
+                        <img src="{{ asset('assets/media/avatars/300-1.jpg') }}" alt="" />
                     </div>
                     <!--end::Symbol-->
 
@@ -11333,7 +11333,55 @@
 <script src="{{ asset('assets/plugins/global/plugins.bundle.js')}}"></script>
 <script src="{{ asset('assets/js/scripts.bundle.js')}}"></script>
 <!--end::Global Javascript Bundle-->
+<!-- SWEET ALERT -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if(session()->has('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Valide',
+            text: "{!! session('success') !!}"
+        });
+    </script>
+@elseif(session()->has('error'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Erreur',
+            text: "{!! session('error') !!}"
+        });
+    </script>
+@elseif(session()->has('warning'))
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Votre attention',
+            text: "{!! session('warning') !!}"
+        });
+    </script>
+@elseif(session()->has('info'))
+    <script>
+        Swal.fire({
+            icon: 'info',
+            title: 'Information',
+            text: "{!! session('info') !!}"
+        });
+    </script>
+@elseif($errors->any())
+    <script>
+        var errorMessages = "<ul>";
+        @foreach ($errors->all() as $error)
+            errorMessages += "<li>{{ $error }}</li>";
+        @endforeach
+            errorMessages += "</ul>";
 
+        Swal.fire({
+            icon: 'error',
+            title: 'Erreur',
+            html: errorMessages
+        });
+    </script>
+@endif
 @yield('scripts')
 <!--end::Javascript-->
 </body>

@@ -84,10 +84,7 @@ class PersonController extends Controller
      */
     public function show(Person $person)
     {
-        $person->load(['document', 'gender', 'post', 'roles', 'maritalStatus']);
-        return view('frontend.pages.persons.show', [
-            'person' => $person
-        ]);
+
     }
 
     /**
@@ -99,7 +96,7 @@ class PersonController extends Controller
      */
     public function update(Request $request, Person $person)
     {
-        //
+        dd($person);
     }
 
     /**

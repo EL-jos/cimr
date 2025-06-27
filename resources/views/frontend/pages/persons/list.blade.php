@@ -196,10 +196,14 @@
                                 <h2 class="fw-bold">Add User</h2>
                                 <!--end::Modal title-->
 
-                                <!--begin::Close-->
+                                {{--<!--begin::Close-->
                                 <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
-                                    <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>                </div>
-                                <!--end::Close-->
+                                    <i class="ki-duotone ki-cross fs-1">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                    </i>
+                                </div>
+                                <!--end::Close-->--}}
                             </div>
                             <!--end::Modal header-->
 
@@ -346,6 +350,18 @@
                                         <!--end::Input group-->
 
                                         <!--begin::Input group-->
+                                        <div class="fv-row mb-7">
+                                            <!--begin::Label-->
+                                            <label class="required fw-semibold fs-6 mb-2">Date d'embauche</label>
+                                            <!--end::Label-->
+
+                                            <!--begin::Input-->
+                                            <input type="date" name="hire_date" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="YYYY-MM-dd" value="" />
+                                            <!--end::Input-->
+                                        </div>
+                                        <!--end::Input group-->
+
+                                        <!--begin::Input group-->
                                         <div id="el-roles" class="mb-5">
                                             <!--begin::Label-->
                                             <label class="required fw-semibold fs-6 mb-5">Role</label>
@@ -434,112 +450,115 @@
         <div class="card-body py-4">
 
             <!--begin::Table-->
-            <div id="kt_table_users_wrapper" class="dt-container dt-bootstrap5 dt-empty-footer"><div id="" class="table-responsive">
-                <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable" id="kt_table_users" style="width: 100%;"><colgroup><col data-dt-column="0" style="width: 36.4px;"><col data-dt-column="1" style="width: 227.033px;"><col data-dt-column="2" style="width: 180.55px;"><col data-dt-column="3" style="width: 180.55px;"><col data-dt-column="4" style="width: 180.55px;"><col data-dt-column="5" style="width: 242.5px;"><col data-dt-column="6" style="width: 151.917px;"></colgroup>
-                    <thead>
-                        <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-                            <th class="w-10px pe-2 dt-orderable-none" data-dt-column="0" rowspan="1" colspan="1" aria-label="">
-                                <span class="dt-column-title">
-                                    <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                                        <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_table_users .form-check-input" value="1">
-                                    </div>
-                                </span>
-                                <span class="dt-column-order"></span>
-                            </th>
-                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="1" rowspan="1" colspan="1" aria-label="User: Activate to sort" tabindex="0">
-                                <span class="dt-column-title" role="button">User</span>
-                                <span class="dt-column-order"></span>
-                            </th>
-                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="2" rowspan="1" colspan="1" aria-label="Role: Activate to sort" tabindex="0">
-                                <span class="dt-column-title" role="button">Role</span>
-                                <span class="dt-column-order"></span>
-                            </th>
-                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="3" rowspan="1" colspan="1" aria-label="Last login: Activate to sort" tabindex="0">
-                                <span class="dt-column-title" role="button">Last login</span>
-                                <span class="dt-column-order"></span>
-                            </th>
-                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="4" rowspan="1" colspan="1" aria-label="Two-step : Activate to sort" tabindex="0">
-                                <span class="dt-column-title" role="button">Two-step </span>
-                                <span class="dt-column-order"></span>
-                            </th>
-                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="5" rowspan="1" colspan="1" aria-label="Joined Date: Activate to sort" tabindex="0">
-                                <span class="dt-column-title" role="button">Joined Date</span>
-                                <span class="dt-column-order"></span>
-                            </th>
-                            <th class="text-end min-w-100px dt-orderable-none" data-dt-column="6" rowspan="1" colspan="1" aria-label="Actions">
-                                <span class="dt-column-title">Actions</span>
-                                <span class="dt-column-order"></span>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-gray-600 fw-semibold">
-                        @foreach($persons as $person)
-                            <tr>
-                                <td>
-                                    <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                        <input class="form-check-input" type="checkbox" value="1">
-                                    </div>
-                                </td>
-                                <td class="d-flex align-items-center">
-                                    <!--begin:: Avatar -->
-                                    <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                                        <a href="{{ route('person.show', $person) }}">
-                                            <div class="symbol-label">
-                                                <img src="{{ asset($person->document->path) }}" alt="{{ $person->firstname . ' ' . \Illuminate\Support\Str::upper($person->lastname) }}" class="w-100">
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <!--end::Avatar-->
-                                    <!--begin::User details-->
-                                    <div class="d-flex flex-column">
-                                        <a href="{{ route('person.show', $person) }}" class="text-gray-800 text-hover-primary mb-1">{{ $person->firstname . ' ' . \Illuminate\Support\Str::upper($person->lastname) }}</a>
-                                        <span>smith@kpmg.com</span>
-                                    </div>
-                                    <!--begin::User details-->
-                                </td>
-                                <td>
-                                    {{ $person->gender->name }}
-                                </td>
-                                <td data-order="2025-06-15T10:11:52+01:00">
-                                    {{ \Illuminate\Support\Carbon::parse($person->birthdate)->format('dd M Y') }}
-                                </td>
-                                <td>
-                                    {{ $person->post->name }}
-                                </td>
-                                <td data-order="2025-04-15T18:05:00+01:00">
-                                    {{ $person->maritalStatus->name }}
-                                </td>
-                                <td class="text-end">
-                                    <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                        Actions
-                                        <i class="ki-duotone ki-down fs-5 ms-1"></i>
-                                    </a>
-                                    <!--begin::Menu-->
-                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <a href="{{ route('person.show', $person) }}" class="menu-link px-3">
-                                                Edit
-                                            </a>
+            <div id="kt_table_users_wrapper" class="dt-container dt-bootstrap5 dt-empty-footer">
+                <div id="" class="table-responsive">
+                    <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable" id="kt_table_users" style="width: 100%;"><colgroup><col data-dt-column="0" style="width: 36.4px;"><col data-dt-column="1" style="width: 227.033px;"><col data-dt-column="2" style="width: 180.55px;"><col data-dt-column="3" style="width: 180.55px;"><col data-dt-column="4" style="width: 180.55px;"><col data-dt-column="5" style="width: 242.5px;"><col data-dt-column="6" style="width: 151.917px;"></colgroup>
+                        <thead>
+                            <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                                <th class="w-10px pe-2 dt-orderable-none" data-dt-column="0" rowspan="1" colspan="1" aria-label="">
+                                    <span class="dt-column-title">
+                                        <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                            <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_table_users .form-check-input" value="1">
                                         </div>
-                                        <!--end::Menu item-->
-
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3" data-kt-users-table-filter="delete_row">
-                                                Delete
-                                            </a>
-                                        </div>
-                                        <!--end::Menu item-->
-                                    </div>
-                                    <!--end::Menu-->
-                                </td>
+                                    </span>
+                                    <span class="dt-column-order"></span>
+                                </th>
+                                <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="1" rowspan="1" colspan="1" aria-label="User: Activate to sort" tabindex="0">
+                                    <span class="dt-column-title" role="button">User</span>
+                                    <span class="dt-column-order"></span>
+                                </th>
+                                <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="2" rowspan="1" colspan="1" aria-label="Role: Activate to sort" tabindex="0">
+                                    <span class="dt-column-title" role="button">Role</span>
+                                    <span class="dt-column-order"></span>
+                                </th>
+                                <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="3" rowspan="1" colspan="1" aria-label="Last login: Activate to sort" tabindex="0">
+                                    <span class="dt-column-title" role="button">Last login</span>
+                                    <span class="dt-column-order"></span>
+                                </th>
+                                <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="4" rowspan="1" colspan="1" aria-label="Two-step : Activate to sort" tabindex="0">
+                                    <span class="dt-column-title" role="button">Two-step </span>
+                                    <span class="dt-column-order"></span>
+                                </th>
+                                <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="5" rowspan="1" colspan="1" aria-label="Joined Date: Activate to sort" tabindex="0">
+                                    <span class="dt-column-title" role="button">Joined Date</span>
+                                    <span class="dt-column-order"></span>
+                                </th>
+                                <th class="text-end min-w-100px dt-orderable-none" data-dt-column="6" rowspan="1" colspan="1" aria-label="Actions">
+                                    <span class="dt-column-title">Actions</span>
+                                    <span class="dt-column-order"></span>
+                                </th>
                             </tr>
-                        @endforeach
+                        </thead>
+                        <tbody class="text-gray-600 fw-semibold">
+                            @foreach($persons as $person)
+                                <tr>
+                                    <td>
+                                        <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                            <input class="form-check-input" type="checkbox" value="1">
+                                        </div>
+                                    </td>
+                                    <td class="d-flex align-items-center">
+                                        <!--begin:: Avatar -->
+                                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                            <a href="{{ route('person.show', $person) }}">
+                                                <div class="symbol-label">
+                                                    <img src="{{ asset($person->document->path) }}" alt="{{ $person->firstname . ' ' . \Illuminate\Support\Str::upper($person->lastname) }}" class="w-100">
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <!--end::Avatar-->
+                                        <!--begin::User details-->
+                                        <div class="d-flex flex-column">
+                                            <a href="{{ route('person.show', $person) }}" class="text-gray-800 text-hover-primary mb-1">{{ $person->firstname . ' ' . \Illuminate\Support\Str::upper($person->lastname) }}</a>
+                                            <span>smith@kpmg.com</span>
+                                        </div>
+                                        <!--begin::User details-->
+                                    </td>
+                                    <td>
+                                        {{ $person->gender->name }}
+                                    </td>
+                                    <td data-order="2025-06-15T10:11:52+01:00">
+                                        {{ \Illuminate\Support\Carbon::parse($person->birthdate)->format('dd M Y') }}
+                                    </td>
+                                    <td>
+                                        {{ $person->post->name }}
+                                    </td>
+                                    <td data-order="2025-04-15T18:05:00+01:00">
+                                        {{ $person->maritalStatus->name }}
+                                    </td>
+                                    <td class="text-end">
+                                        <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                            Actions
+                                            <i class="ki-duotone ki-down fs-5 ms-1"></i>
+                                        </a>
+                                        <!--begin::Menu-->
+                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item px-3">
+                                                <a href="{{ route('person.show', $person) }}" class="menu-link px-3">
+                                                    Voir
+                                                </a>
+                                            </div>
+                                            <!--end::Menu item-->
 
-                    </tbody>
-                    <tfoot></tfoot>
-                </table>
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item px-3">
+                                                <a href="javajscript:;" onclick="document.getElementById('el-delete-user-form{{ $person->id }}').submit()" class="menu-link px-3" data-kt-users-table-filter="delete_row">
+                                                    <form id="el-delete-user-form{{ $person->id }}">
+                                                        @csrf
+                                                        @method("DELETE")
+                                                    </form>
+                                                    Supprimer
+                                                </a>
+                                            </div>
+                                            <!--end::Menu item-->
+                                        </div>
+                                        <!--end::Menu-->
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
                 <div id="" class="row">
                     <div id="" class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start dt-toolbar"></div>
