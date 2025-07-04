@@ -18,6 +18,7 @@ Route::controller(\App\Http\Controllers\frontend\PageController::class)->group(f
     Route::get('/users', 'users')->name("users.page");
     Route::get('/persons/{person}', 'person')->name("person.show");
     Route::match(['get', 'post'], '/log-in', 'logIn')->name("logIn.page");
+    Route::delete('/log-out', 'logOut')->name("logOut.page");
 });
 
 Route::resource('/gender', \App\Http\Controllers\backend\GenderController::class);

@@ -1,3 +1,12 @@
+@php
+    $person = null;
+    if(session()->has('person')){
+        $person = \App\Models\Person::findOrFail(session()->get('person')['id']);
+    }else{
+        $person = new \App\Models\Person();
+    }
+@endphp
+
 <!DOCTYPE html>
 <html lang="fr">
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
@@ -67,7 +76,7 @@
                 <div class="aside-user d-flex align-items-sm-center justify-content-center py-5">
                     <!--begin::Symbol-->
                     <div class="symbol symbol-50px">
-                        <img src="{{ asset('assets/media/avatars/300-1.jpg') }}" alt="" />
+                        <img src="{{ asset($person->document->path) }}" alt="" />
                     </div>
                     <!--end::Symbol-->
 
@@ -112,7 +121,7 @@
                                         <div class="menu-content d-flex align-items-center px-3">
                                             <!--begin::Avatar-->
                                             <div class="symbol symbol-50px me-5">
-                                                <img alt="Logo" src="assets/media/avatars/300-1.jpg" />
+                                                <img alt="Logo" src="{{ asset('assets/media/avatars/300-1.jpg')}}" />
                                             </div>
                                             <!--end::Avatar-->
 
@@ -1107,7 +1116,7 @@
                                         class="btn btn-sm btn-light fw-bold btn-active-light-primary me-2"
                                         data-kt-search-element="advanced-options-form-cancel">Cancel</button>
 
-                                <a href="utilities/search/horizontal.html"
+                                <a href="javascript:;"
                                    class="btn btn-sm fw-bold btn-primary"
                                    data-kt-search-element="advanced-options-form-search">Search</a>
                             </div>
@@ -1215,40 +1224,40 @@
                 <!--begin::Menu-->
                 <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500"
                      id="#kt_aside_menu" data-kt-menu="true">
-                    <!--begin:Menu item-->
-                    <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
-                        <!--begin:Menu link--><span class="menu-link"><span class="menu-icon"><i
-                                    class="ki-duotone ki-element-11 fs-2"><span class="path1"></span><span
-                                        class="path2"></span><span class="path3"></span><span
-                                        class="path4"></span></i></span><span
-                                class="menu-title">Dashboards</span><span
-                                class="menu-arrow"></span></span><!--end:Menu link-->
-                    </div><!--end:Menu item--><!--begin:Menu item-->
+
                     <div class="menu-item pt-5"><!--begin:Menu content-->
                         <div class="menu-content"><span
                                 class="menu-heading fw-bold text-uppercase fs-7">Pages</span></div>
                         <!--end:Menu content-->
-                    </div><!--end:Menu item--><!--begin:Menu item-->
-                    <div class="menu-item"><!--begin:Menu link-->
-                        <a class="menu-link" href="{{ route('users.page') }}">
+                    </div><!--end:Menu item-->
+                    @if($person->exists && $person->roles->contains(1))
+                        <!--begin:Menu item-->
+                        <div class="menu-item"><!--begin:Menu link-->
+                            <a class="menu-link" href="{{ route('users.page') }}">
                                     <span class="menu-icon">
                                         <i class="ki-duotone ki-rocket fs-2">
                                             <span class="path1"></span>
                                             <span class="path2"></span>
                                         </i>
                                     </span>
-                            <span class="menu-title">Personnes</span>
-                        </a><!--end:Menu link-->
-                    </div>
+                                <span class="menu-title">Personnes</span>
+                            </a><!--end:Menu link-->
+                        </div>
+                        <!--end:Menu item-->
+                    @endif
                     <div class="menu-item"><!--begin:Menu link-->
-                        <a class="menu-link" href="" target="_blank">
+                        <a class="menu-link" href="javascript:;" target="_blank" onclick="document.getElementById('el-log-out-form').submit()">
+                            <form id="el-log-out-form" action="{{ route("logOut.page") }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                            </form>
                                     <span class="menu-icon">
                                         <i class="ki-duotone ki-rocket fs-2">
                                             <span class="path1"></span>
                                             <span class="path2"></span>
                                         </i>
                                     </span>
-                            <span class="menu-title">Congés</span>
+                            <span class="menu-title">Deconnexion</span>
                         </a><!--end:Menu link-->
                     </div>
                 </div>

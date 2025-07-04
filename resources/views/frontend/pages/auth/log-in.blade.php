@@ -130,8 +130,8 @@
                 <div class="d-flex flex-center flex-column flex-column-fluid px-lg-10 pb-15 pb-lg-20">
 
                     <!--begin::Form-->
-                    <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form"
-                          data-kt-redirect-url="/metronic8/demo8/index.html" action="#">
+                    <form class="form w-100" novalidate="novalidate" action="{{ route('logIn.page') }}" method="post">
+                        @csrf
                         <!--begin::Heading-->
                         <div class="text-center mb-11">
                             <!--begin::Title-->
@@ -208,7 +208,7 @@
                             <div></div>
 
                             <!--begin::Link-->
-                            <a href="reset-password.html" class="link-primary">
+                            <a href="javascript:;" class="link-primary">
                                 Forgot Password ?
                             </a>
                             <!--end::Link-->
@@ -237,7 +237,7 @@
                         <div class="text-gray-500 text-center fw-semibold fs-6">
                             Not a Member yet?
 
-                            <a href="sign-up.html" class="link-primary">
+                            <a href="javascript:;" class="link-primary">
                                 Sign up
                             </a>
                         </div>
@@ -330,11 +330,11 @@
 
                     <!--begin::Links-->
                     <div class="d-flex fw-semibold text-primary fs-base gap-5">
-                        <a href="../../../pages/team.html" target="_blank">Terms</a>
+                        <a href="javascript:;" target="_blank">Terms</a>
 
-                        <a href="../../../pages/pricing/column.html" target="_blank">Plans</a>
+                        <a href="javascript:;" target="_blank">Plans</a>
 
-                        <a href="../../../pages/contact.html" target="_blank">Contact Us</a>
+                        <a href="javascript:;" target="_blank">Contact Us</a>
                     </div>
                     <!--end::Links-->
                 </div>
